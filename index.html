@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GEOMIBRA – Topographie · Réseaux · SIG · Ingénierie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep: #0a1f44;
+      --blue-mid: #1a3a6b;
+      --blue-accent: #1d6fc4;
+      --blue-light: #4a9fe8;
+      --blue-pale: #e8f2fd;
+      --gold: #c8a84b;
+      --white: #ffffff;
+      --gray-soft: #f4f7fb;
+      --gray-text: #5a6a80;
+      --text: #0d1b2e;
+      --radius: 4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      height: 72px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(10,31,68,0.08);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(10,31,68,0.12); }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.7rem;
+      letter-spacing: 0.08em;
+      color: var(--blue-deep);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--blue-accent); }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--blue-mid);
+      text-decoration: none; position: relative; padding-bottom: 4px;
+      transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--blue-accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--blue-accent); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: var(--blue-accent); color: var(--white) !important;
+      padding: 0.5rem 1.4rem; border-radius: var(--radius);
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--blue-deep) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 5vw 80px;
+      background: var(--blue-deep);
+      overflow: hidden;
+    }
+
+    .hero-bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(29,111,196,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,111,196,0.12) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridSlide 20s linear infinite;
+    }
+    @keyframes gridSlide {
+      from { background-position: 0 0; }
+      to { background-position: 60px 60px; }
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(29,111,196,0.18) 0%, transparent 65%),
+                  linear-gradient(135deg, var(--blue-deep) 0%, #0e2d5c 100%);
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(29,111,196,0.2);
+      border: 1px solid rgba(29,111,196,0.4);
+      color: var(--blue-light);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 6px 14px; border-radius: 2px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-light); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--blue-light);
+      display: block;
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 520px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--blue-accent); color: var(--white);
+      padding: 0.85rem 2rem; border-radius: var(--radius);
+      font-weight: 500; font-size: 0.95rem; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.3); color: var(--white);
+      padding: 0.85rem 2rem; border-radius: var(--radius);
+      font-weight: 400; font-size: 0.95rem; text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    .hero-stats {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .stat-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.4rem; font-weight: 700; color: var(--white);
+    }
+    .stat-val span { color: var(--blue-light); }
+    .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTION BASES ─── */
+    section { padding: 100px 5vw; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--blue-accent);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; text-transform: uppercase;
+      color: var(--blue-deep); line-height: 1.05;
+    }
+    h2 em { font-style: normal; color: var(--blue-accent); }
+    .section-desc {
+      margin-top: 1rem; font-size: 1rem; font-weight: 300;
+      color: var(--gray-text); line-height: 1.75; max-width: 560px;
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--gray-soft); }
+
+    .services-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem; margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: rgba(10,31,68,0.1);
+      border: 1.5px solid rgba(10,31,68,0.1);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s;
+      cursor: default;
+    }
+    .service-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--blue-accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { transform: translateY(-4px); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--blue-pale);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-num {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 3.5rem; font-weight: 800;
+      color: rgba(10,31,68,0.04); line-height: 1;
+    }
+
+    .service-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--blue-deep); margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem; color: var(--gray-text); line-height: 1.7;
+    }
+
+    .service-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.25rem;
+    }
+    .tag {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--blue-pale); color: var(--blue-accent);
+      padding: 3px 10px; border-radius: 2px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8vw;
+      align-items: center;
+      background: var(--white);
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-img-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 100%);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SVG illustration placeholder */
+    .about-img-frame svg { width: 100%; height: 100%; }
+
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem; right: -1.5rem;
+      background: var(--blue-accent);
+      color: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      text-align: center;
+      width: 140px;
+    }
+    .about-badge .big { font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 800; display: block; }
+    .about-badge .small { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .about-values { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .value-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid rgba(10,31,68,0.08);
+      border-radius: var(--radius);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .value-row:hover { border-color: var(--blue-accent); background: var(--blue-pale); }
+    .value-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .value-text strong { display: block; font-size: 0.9rem; color: var(--blue-deep); }
+    .value-text span { font-size: 0.82rem; color: var(--gray-text); }
+
+    /* ─── CLIENTS LOGO BAR ─── */
+    #clients {
+      background: var(--blue-deep);
+      padding: 60px 5vw;
+    }
+    .clients-label {
+      text-align: center;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-bottom: 2.5rem;
+    }
+    .clients-track-wrap { overflow: hidden; position: relative; }
+    .clients-track-wrap::before,
+    .clients-track-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
+    }
+    .clients-track-wrap::before { left: 0; background: linear-gradient(to right, var(--blue-deep), transparent); }
+    .clients-track-wrap::after { right: 0; background: linear-gradient(to left, var(--blue-deep), transparent); }
+
+    .clients-track {
+      display: flex; gap: 4rem; align-items: center;
+      width: max-content;
+      animation: scrollTrack 30s linear infinite;
+    }
+    @keyframes scrollTrack {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .client-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase; white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .client-logo:hover { color: rgba(255,255,255,0.7); }
+
+    /* ─── PROCESS ─── */
+    #process { background: var(--gray-soft); }
+    .process-header { margin-bottom: 4rem; }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 36px; left: 10%; right: 10%;
+      height: 1px; background: rgba(10,31,68,0.1);
+      z-index: 0;
+    }
+
+    .step {
+      position: relative; z-index: 1;
+      padding: 0 1.5rem 2rem;
+      text-align: center;
+    }
+    .step-num {
+      width: 72px; height: 72px; margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid rgba(10,31,68,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem; font-weight: 800;
+      color: var(--blue-accent);
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+    }
+    .step:hover .step-num {
+      background: var(--blue-accent); border-color: var(--blue-accent); color: var(--white);
+    }
+    .step h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem; font-weight: 700; text-transform: uppercase;
+      color: var(--blue-deep); margin-bottom: 0.5rem;
+    }
+    .step p { font-size: 0.85rem; color: var(--gray-text); line-height: 1.65; }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--blue-deep);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: start;
+    }
+
+    #contact h2 { color: var(--white); }
+    #contact .section-label { color: var(--blue-light); }
+    #contact .section-desc { color: rgba(255,255,255,0.55); }
+
+    .contact-info { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .contact-item-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(29,111,196,0.2);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .contact-item-text strong { display: block; font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+    .contact-item-text a, .contact-item-text span {
+      color: var(--white); text-decoration: none; font-size: 0.97rem;
+    }
+    .contact-item-text a:hover { color: var(--blue-light); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.78rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+    input, textarea, select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--blue-accent);
+      background: rgba(29,111,196,0.1);
+    }
+    select option { background: var(--blue-deep); }
+    textarea { resize: vertical; min-height: 130px; }
+
+    .form-submit {
+      background: var(--blue-accent);
+      color: var(--white);
+      border: none; cursor: pointer;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 500;
+      transition: background 0.2s, transform 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 0.5rem;
+    }
+    .form-submit:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #060f21;
+      padding: 2.5rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem; font-weight: 800; letter-spacing: 0.08em;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--blue-accent); }
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.35); text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; }
+    .footer-links a:hover { color: var(--blue-light); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #about, #contact { grid-template-columns: 1fr; }
+      .about-badge { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+      .process-steps::before { display: none; }
+      .services-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">GEO<span>MI</span>BRA</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Bureau d'études & mesures de précision</div>
+    <h1>
+      Expertise terrain,<br>
+      <em>données fiables.</em>
+    </h1>
+    <p class="hero-sub">
+      GEOMIBRA accompagne les professionnels du BTP, collectivités et maîtres d'ouvrage en topographie, détection de réseaux, SIG et ingénierie des infrastructures.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.68h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17.34z"/></svg>
+        Demander un devis
+      </a>
+      <a href="#services" class="btn-outline">Découvrir nos services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">15<span>+</span></div>
+        <div class="stat-label">Ans d'expertise</div>
+      </div>
+      <div>
+        <div class="stat-val">500<span>+</span></div>
+        <div class="stat-label">Chantiers réalisés</div>
+      </div>
+      <div>
+        <div class="stat-val">3<span>mm</span></div>
+        <div class="stat-label">Précision garantie</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">Nos domaines</div>
+      <h2>Nos <em>services</em></h2>
+      <p class="section-desc">Des prestations complètes pour sécuriser et optimiser chaque phase de votre projet, de l'étude à la réception.</p>
+    </div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <div class="service-icon">📐</div>
+      <h3>Topographie</h3>
+      <p>Relevés de terrain haute précision, implantations d'ouvrages, levés altimétriques et planimétriques, plans de récolement.</p>
+      <div class="service-tags">
+        <span class="tag">Levé 3D</span>
+        <span class="tag">Scanner laser</span>
+        <span class="tag">Drone</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <div class="service-icon">🔍</div>
+      <h3>Détection de réseaux</h3>
+      <p>Localisation et cartographie des réseaux souterrains (électricité, gaz, eau, télécoms) avant travaux. Géoradar et détection électromagnétique.</p>
+      <div class="service-tags">
+        <span class="tag">Géoradar GPR</span>
+        <span class="tag">DT-DICT</span>
+        <span class="tag">Marquage terrain</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <div class="service-icon">🗺️</div>
+      <h3>SIG & Cartographie</h3>
+      <p>Création, mise à jour et exploitation de bases de données géographiques. Production de cartes thématiques et tableaux de bord géospatiaux.</p>
+      <div class="service-tags">
+        <span class="tag">QGIS / ArcGIS</span>
+        <span class="tag">WebMapping</span>
+        <span class="tag">Géodatabase</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <div class="service-icon">⚙️</div>
+      <h3>Ingénierie & Études</h3>
+      <p>Études techniques, contrôles de conformité, cubatures, modélisation 3D des infrastructures et accompagnement en maîtrise d'œuvre.</p>
+      <div class="service-tags">
+        <span class="tag">BIM / MNT</span>
+        <span class="tag">Cubature</span>
+        <span class="tag">Contrôle qualité</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">05</span>
+      <div class="service-icon">🛸</div>
+      <h3>Topographie par drone</h3>
+      <p>Photogrammétrie aérienne, modèles numériques de terrain, orthophotographies haute résolution pour grandes surfaces et zones d'accès difficile.</p>
+      <div class="service-tags">
+        <span class="tag">Photogrammétrie</span>
+        <span class="tag">Orthophoto</span>
+        <span class="tag">MNT / MNS</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">06</span>
+      <div class="service-icon">📋</div>
+      <h3>Assistance & Conseil</h3>
+      <p>Expertise technique, formation aux outils géomatiques, assistance à maîtrise d'ouvrage et conseil réglementaire (DT, Classe A/B/C).</p>
+      <div class="service-tags">
+        <span class="tag">AMO</span>
+        <span class="tag">Formation</span>
+        <span class="tag">Réglementation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CLIENTS ─── -->
+<section id="clients">
+  <p class="clients-label">Ils nous font confiance</p>
+  <div class="clients-track-wrap">
+    <div class="clients-track">
+      <span class="client-logo">Entreprise BTP</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Collectivités locales</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Promoteur A</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Gestionnaire réseaux</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Syndic & Aménagement</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Bureau d'études partenaire</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Mairies & Agglomérations</span>
+      <span class="client-logo">•</span>
+      <!-- duplicate for infinite loop -->
+      <span class="client-logo">Entreprise BTP</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Collectivités locales</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Promoteur A</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Gestionnaire réseaux</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Syndic & Aménagement</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Bureau d'études partenaire</span>
+      <span class="client-logo">•</span>
+      <span class="client-logo">Mairies & Agglomérations</span>
+      <span class="client-logo">•</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-img-frame">
+      <!-- Illustration SVG terrain / topo -->
+      <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0a1f44"/>
+            <stop offset="100%" stop-color="#1a3a6b"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="500" fill="url(#bg)"/>
+        <!-- Grid lines -->
+        <g stroke="rgba(29,111,196,0.2)" stroke-width="1">
+          <line x1="0" y1="100" x2="400" y2="100"/>
+          <line x1="0" y1="200" x2="400" y2="200"/>
+          <line x1="0" y1="300" x2="400" y2="300"/>
+          <line x1="0" y1="400" x2="400" y2="400"/>
+          <line x1="100" y1="0" x2="100" y2="500"/>
+          <line x1="200" y1="0" x2="200" y2="500"/>
+          <line x1="300" y1="0" x2="300" y2="500"/>
+        </g>
+        <!-- Terrain contour lines -->
+        <g fill="none" stroke="rgba(74,159,232,0.5)" stroke-width="1.5">
+          <path d="M 20 380 Q 80 360 140 370 Q 200 380 260 350 Q 320 320 380 340"/>
+          <path d="M 20 340 Q 80 310 150 325 Q 220 340 280 300 Q 340 260 380 290"/>
+          <path d="M 20 300 Q 100 260 170 280 Q 250 300 300 250 Q 350 200 380 240"/>
+          <path d="M 20 260 Q 110 210 180 235 Q 260 260 320 200 Q 360 160 380 190"/>
+          <path d="M 40 220 Q 120 170 200 195 Q 280 220 340 155 Q 370 125 380 145"/>
+        </g>
+        <!-- Survey instrument icon -->
+        <g transform="translate(160, 150)">
+          <circle cx="40" cy="40" r="30" fill="none" stroke="rgba(29,111,196,0.8)" stroke-width="2"/>
+          <line x1="40" y1="10" x2="40" y2="70" stroke="rgba(29,111,196,0.8)" stroke-width="1.5"/>
+          <line x1="10" y1="40" x2="70" y2="40" stroke="rgba(29,111,196,0.8)" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="5" fill="rgba(74,159,232,0.9)"/>
+          <!-- tripod -->
+          <line x1="40" y1="70" x2="0" y2="110" stroke="rgba(29,111,196,0.7)" stroke-width="2"/>
+          <line x1="40" y1="70" x2="40" y2="120" stroke="rgba(29,111,196,0.7)" stroke-width="2"/>
+          <line x1="40" y1="70" x2="80" y2="110" stroke="rgba(29,111,196,0.7)" stroke-width="2"/>
+        </g>
+        <!-- GPS marker -->
+        <g transform="translate(60, 200)">
+          <circle cx="20" cy="20" r="12" fill="rgba(29,111,196,0.3)" stroke="rgba(74,159,232,0.8)" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="4" fill="rgba(74,159,232,1)"/>
+          <line x1="20" y1="32" x2="20" y2="55" stroke="rgba(74,159,232,0.8)" stroke-width="2"/>
+        </g>
+        <!-- Data label floating -->
+        <rect x="240" y="60" width="130" height="50" rx="3" fill="rgba(29,111,196,0.15)" stroke="rgba(29,111,196,0.4)" stroke-width="1"/>
+        <text x="255" y="82" font-family="monospace" font-size="10" fill="rgba(74,159,232,0.9)">X: 47.3421°N</text>
+        <text x="255" y="98" font-family="monospace" font-size="10" fill="rgba(74,159,232,0.9)">Y: 2.8634°E</text>
+        <!-- accuracy ring -->
+        <circle cx="200" cy="400" r="40" fill="none" stroke="rgba(29,111,196,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle cx="200" cy="400" r="20" fill="none" stroke="rgba(29,111,196,0.5)" stroke-width="1.5"/>
+        <circle cx="200" cy="400" r="6" fill="rgba(74,159,232,0.8)"/>
+      </svg>
+    </div>
+    <div class="about-badge">
+      <span class="big">15</span>
+      <span class="small">ans<br>d'expérience</span>
+    </div>
+  </div>
+
+  <div class="about-text">
+    <div class="section-label">À propos de GEOMIBRA</div>
+    <h2>Un bureau d'études<br><em>à votre service</em></h2>
+    <p class="section-desc">
+      GEOMIBRA est un bureau d'études spécialisé en topographie, détection des réseaux souterrains, SIG et ingénierie des infrastructures. Nous accompagnons les professionnels du BTP, collectivités et maîtres d'ouvrage dans la sécurisation et l'optimisation de leurs projets.
+    </p>
+    <p class="section-desc" style="margin-top: 1rem;">
+      Grâce à notre expertise technique et nos outils de haute précision (scanner 3D, géoradar, drone, SIG), nous garantissons des solutions fiables et conformes aux réglementations en vigueur.
+    </p>
+
+    <div class="about-values">
+      <div class="value-row">
+        <span class="value-icon">🎯</span>
+        <div class="value-text">
+          <strong>Précision & Fiabilité</strong>
+          <span>Des relevés ultra-précis, des données exploitables immédiatement.</span>
+        </div>
+      </div>
+      <div class="value-row">
+        <span class="value-icon">⚡</span>
+        <div class="value-text">
+          <strong>Réactivité</strong>
+          <span>Intervention rapide, délais tenus, équipe disponible.</span>
+        </div>
+      </div>
+      <div class="value-row">
+        <span class="value-icon">🔒</span>
+        <div class="value-text">
+          <strong>Sécurité & Conformité</strong>
+          <span>Normes et réglementations respectées à chaque prestation.</span>
+        </div>
+      </div>
+      <div class="value-row">
+        <span class="value-icon">💡</span>
+        <div class="value-text">
+          <strong>Innovation technologique</strong>
+          <span>Outils modernes : drone, scanner 3D, géoradar, SIG.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="process">
+  <div class="process-header">
+    <div class="section-label">Notre méthode</div>
+    <h2>Comment nous <em>travaillons</em></h2>
+    <p class="section-desc">Un processus structuré, de la prise en charge de votre demande jusqu'à la livraison des livrables finaux.</p>
+  </div>
+
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Analyse du besoin</h4>
+      <p>Étude de votre cahier des charges, évaluation des contraintes terrain et définition du périmètre d'intervention.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Devis & Planning</h4>
+      <p>Proposition tarifaire transparente et calendrier d'intervention adapté à vos délais de chantier.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Intervention terrain</h4>
+      <p>Déploiement de nos équipes et équipements sur site pour des mesures et relevés haute précision.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Traitement des données</h4>
+      <p>Traitement, modélisation et vérification des données en bureau. Contrôle qualité systématique.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <h4>Livraison des livrables</h4>
+      <p>Remise des plans, rapports, fichiers SIG ou nuages de points dans les formats standards du secteur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="contact-left">
+    <div class="section-label">Travaillons ensemble</div>
+    <h2>Contactez<br><em>GEOMIBRA</em></h2>
+    <p class="section-desc">Un projet, une question, un devis ? Notre équipe vous répond rapidement et vous propose la meilleure solution pour votre chantier.</p>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text">
+          <strong>Adresse</strong>
+          <span>— À compléter —</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text">
+          <strong>Téléphone</strong>
+          <a href="tel:+330000000000">+33 0 00 00 00 00</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-text">
+          <strong>Email</strong>
+          <a href="/cdn-cgi/l/email-protection#6704080913060413270002080a0e051506490115"><span class="__cf_email__" data-cfemail="b3d0dcddc7d2d0c7f3d4d6dcdedad1c1d29dd5c1">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div class="contact-item-text">
+          <strong>Disponibilité</strong>
+          <span>Lun – Ven : 8h00 – 18h00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">Nom *</label>
+          <input type="text" id="nom" placeholder="Votre nom" required />
+        </div>
+        <div class="form-group">
+          <label for="societe">Société</label>
+          <input type="text" id="societe" placeholder="Votre société" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" placeholder="email@exemple.fr" required />
+        </div>
+        <div class="form-group">
+          <label for="tel">Téléphone</label>
+          <input type="tel" id="tel" placeholder="06 00 00 00 00" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="service">Service souhaité</label>
+        <select id="service">
+          <option value="">Sélectionner un service...</option>
+          <option>Topographie</option>
+          <option>Détection de réseaux</option>
+          <option>SIG & Cartographie</option>
+          <option>Ingénierie & Études</option>
+          <option>Topographie par drone</option>
+          <option>Assistance & Conseil</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Message *</label>
+        <textarea id="message" placeholder="Décrivez votre projet, localisation, délais..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Envoyer ma demande
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">GEO<span>MI</span>BRA</div>
+  <p>© 2025 GEOMIBRA – Tous droits réservés</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#about">À propos</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Nav scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Smooth appear on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .step, .value-row, .contact-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Message envoyé !';
+    btn.style.background = '#16a34a';
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="
