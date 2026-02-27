@@ -45,14 +45,17 @@
     nav.scrolled { box-shadow: 0 4px 24px rgba(10,31,68,0.12); }
 
     .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-text {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 800;
       font-size: 1.7rem;
       letter-spacing: 0.08em;
       color: var(--blue-deep);
-      text-decoration: none;
     }
-    .nav-logo span { color: var(--blue-accent); }
+    .nav-logo-text span { color: var(--blue-accent); }
 
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
@@ -513,7 +516,7 @@
 
 <!-- ─── NAV ─── -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">GEO<span>MI</span>BRA</a>
+  <a href="#" class="nav-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 36" width="190" height="36"><defs><linearGradient id="tubeNav" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a1f44"/><stop offset="100%" stop-color="#1d6fc4"/></linearGradient><linearGradient id="bubNav" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d6fc4"/><stop offset="100%" stop-color="#4a9fe8"/></linearGradient></defs><rect x="1" y="6" width="34" height="24" rx="12" fill="none" stroke="url(#tubeNav)" stroke-width="2"/><line x1="11" y1="9" x2="11" y2="27" stroke="#1d6fc4" stroke-width="0.8" opacity="0.35"/><line x1="18" y1="8" x2="18" y2="28" stroke="#1d6fc4" stroke-width="1.2" opacity="0.55"/><line x1="25" y1="9" x2="25" y2="27" stroke="#1d6fc4" stroke-width="0.8" opacity="0.35"/><circle cx="18" cy="18" r="7" fill="#1d6fc4" opacity="0.08"/><circle cx="18" cy="18" r="7" fill="none" stroke="url(#bubNav)" stroke-width="1.6"/><circle cx="18" cy="18" r="2.8" fill="url(#bubNav)"/><circle cx="18" cy="18" r="1.2" fill="white"/><line x1="35" y1="18" x2="42" y2="18" stroke="#1d6fc4" stroke-width="2" stroke-linecap="round"/><line x1="42" y1="14" x2="42" y2="22" stroke="#1d6fc4" stroke-width="1.8" stroke-linecap="round"/><line x1="48" y1="8" x2="48" y2="28" stroke="#0a1f44" stroke-width="0.8" opacity="0.12"/><text x="54" y="23" font-family="Barlow Condensed,Arial Black,sans-serif" font-size="20" font-weight="900" letter-spacing="2"><tspan fill="#0a1f44">GEO</tspan><tspan fill="#1d6fc4">MI</tspan><tspan fill="#0a1f44">BRA</tspan></text></svg></a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#about">À propos</a></li>
@@ -908,7 +911,7 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-logo">GEO<span>MI</span>BRA</div>
+  <div class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 36" width="160" height="30"><defs><linearGradient id="tubeFoot" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4a9fe8"/><stop offset="100%" stop-color="#1d6fc4"/></linearGradient><linearGradient id="bubFoot" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a9fe8"/><stop offset="100%" stop-color="#1d6fc4"/></linearGradient></defs><rect x="1" y="6" width="34" height="24" rx="12" fill="none" stroke="url(#tubeFoot)" stroke-width="2"/><line x1="11" y1="9" x2="11" y2="27" stroke="#4a9fe8" stroke-width="0.8" opacity="0.3"/><line x1="18" y1="8" x2="18" y2="28" stroke="#4a9fe8" stroke-width="1.2" opacity="0.5"/><line x1="25" y1="9" x2="25" y2="27" stroke="#4a9fe8" stroke-width="0.8" opacity="0.3"/><circle cx="18" cy="18" r="7" fill="#4a9fe8" opacity="0.06"/><circle cx="18" cy="18" r="7" fill="none" stroke="url(#bubFoot)" stroke-width="1.6"/><circle cx="18" cy="18" r="2.8" fill="url(#bubFoot)"/><circle cx="18" cy="18" r="1.2" fill="white"/><line x1="35" y1="18" x2="42" y2="18" stroke="#4a9fe8" stroke-width="2" stroke-linecap="round"/><line x1="42" y1="14" x2="42" y2="22" stroke="#4a9fe8" stroke-width="1.8" stroke-linecap="round"/><line x1="48" y1="8" x2="48" y2="28" stroke="white" stroke-width="0.8" opacity="0.08"/><text x="54" y="23" font-family="Barlow Condensed,Arial Black,sans-serif" font-size="20" font-weight="900" letter-spacing="2"><tspan fill="white">GEO</tspan><tspan fill="#4a9fe8">MI</tspan><tspan fill="white">BRA</tspan></text></svg></div>
   <p>© 2025 GEOMIBRA – Tous droits réservés</p>
   <div class="footer-links">
     <a href="#services">Services</a>
