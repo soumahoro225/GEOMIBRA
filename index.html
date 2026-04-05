@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GEOMIBRA – Topographie · Réseaux · SIG · Ingénierie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:wght@700;800;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,7 +14,8 @@
       --blue-accent: #1d6fc4;
       --blue-light: #4a9fe8;
       --blue-pale: #e8f2fd;
-      --gold: #c8a84b;
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
       --white: #ffffff;
       --gray-soft: #f4f7fb;
       --gray-text: #5a6a80;
@@ -37,48 +38,62 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 5vw;
       height: 72px;
-      background: rgba(255,255,255,0.95);
+      background: rgba(8, 18, 42, 0.97);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(10,31,68,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
       transition: box-shadow 0.3s;
     }
-    nav.scrolled { box-shadow: 0 4px 24px rgba(10,31,68,0.12); }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
 
+    /* ══ NOUVEAU LOGO NAV ══ */
     .nav-logo {
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 14px;
       text-decoration: none;
     }
-    .nav-logo-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1.7rem;
-      letter-spacing: 0.08em;
-      color: var(--blue-deep);
+    .nav-logo-texts {
+      display: flex; flex-direction: column; line-height: 1;
     }
-    .nav-logo-text span { color: var(--blue-accent); }
+    .nav-logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 800; letter-spacing: 5px;
+      color: #F5F0E8; text-transform: uppercase;
+    }
+    .nav-logo-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 7px; font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(201,168,76,0.65);
+      margin-top: 3px;
+    }
+    .nav-logo-city {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 6.5px; font-weight: 400; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(201,168,76,0.35);
+      margin-top: 1px;
+    }
 
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--blue-mid);
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(245,240,232,0.55);
       text-decoration: none; position: relative; padding-bottom: 4px;
       transition: color 0.2s;
     }
     .nav-links a::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 2px; background: var(--blue-accent);
+      height: 1px; background: var(--gold);
       transform: scaleX(0); transform-origin: left;
       transition: transform 0.25s ease;
     }
-    .nav-links a:hover { color: var(--blue-accent); }
+    .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after { transform: scaleX(1); }
 
     .nav-cta {
-      background: var(--blue-accent); color: var(--white) !important;
-      padding: 0.5rem 1.4rem; border-radius: var(--radius);
-      transition: background 0.2s !important;
+      border: 1px solid var(--gold) !important;
+      color: var(--gold) !important;
+      padding: 6px 18px;
+      transition: all 0.2s !important;
     }
-    .nav-cta:hover { background: var(--blue-deep) !important; }
+    .nav-cta:hover { background: var(--gold) !important; color: #0a1f44 !important; }
     .nav-cta::after { display: none !important; }
 
     /* ─── HERO ─── */
@@ -164,13 +179,13 @@
     }
 
     .btn-primary {
-      background: var(--blue-accent); color: var(--white);
+      background: var(--gold); color: #0a1f44;
       padding: 0.85rem 2rem; border-radius: var(--radius);
-      font-weight: 500; font-size: 0.95rem; text-decoration: none;
+      font-weight: 600; font-size: 0.95rem; text-decoration: none;
       transition: background 0.2s, transform 0.2s;
       display: inline-flex; align-items: center; gap: 8px;
     }
-    .btn-primary:hover { background: var(--blue-light); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
 
     .btn-outline {
       border: 1px solid rgba(255,255,255,0.3); color: var(--white);
@@ -178,7 +193,7 @@
       font-weight: 400; font-size: 0.95rem; text-decoration: none;
       transition: border-color 0.2s, background 0.2s;
     }
-    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
     .hero-stats {
       display: flex; gap: 3rem; flex-wrap: wrap;
@@ -191,7 +206,7 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 2.4rem; font-weight: 700; color: var(--white);
     }
-    .stat-val span { color: var(--blue-light); }
+    .stat-val span { color: var(--gold); }
     .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
 
     @keyframes fadeUp {
@@ -203,7 +218,7 @@
     section { padding: 100px 5vw; }
     .section-label {
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--blue-accent);
+      text-transform: uppercase; color: var(--gold);
       margin-bottom: 1rem;
     }
     h2 {
@@ -212,7 +227,7 @@
       font-weight: 700; text-transform: uppercase;
       color: var(--blue-deep); line-height: 1.05;
     }
-    h2 em { font-style: normal; color: var(--blue-accent); }
+    h2 em { font-style: normal; color: var(--gold); }
     .section-desc {
       margin-top: 1rem; font-size: 1rem; font-weight: 300;
       color: var(--gray-text); line-height: 1.75; max-width: 560px;
@@ -238,18 +253,21 @@
       background: var(--white);
       padding: 2.5rem 2rem;
       position: relative; overflow: hidden;
-      transition: transform 0.3s;
+      transition: background 0.3s, transform 0.3s;
       cursor: default;
     }
     .service-card::before {
       content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-      background: var(--blue-accent);
-      transform: scaleX(0); transform-origin: left;
+      top: 0; left: 0; bottom: 0; width: 3px;
+      background: var(--gold);
+      transform: scaleY(0); transform-origin: bottom;
       transition: transform 0.35s ease;
     }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-card:hover { transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleY(1); }
+    .service-card:hover { background: #0a1f44; }
+    .service-card:hover h3 { color: #F5F0E8; }
+    .service-card:hover p { color: rgba(245,240,232,0.6); }
+    .service-card:hover .tag { background: rgba(201,168,76,0.1); color: var(--gold); }
 
     .service-icon {
       width: 52px; height: 52px;
@@ -272,10 +290,12 @@
       font-size: 1.25rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.04em;
       color: var(--blue-deep); margin-bottom: 0.75rem;
+      transition: color 0.3s;
     }
 
     .service-card p {
       font-size: 0.9rem; color: var(--gray-text); line-height: 1.7;
+      transition: color 0.3s;
     }
 
     .service-tags {
@@ -286,6 +306,7 @@
       text-transform: uppercase;
       background: var(--blue-pale); color: var(--blue-accent);
       padding: 3px 10px; border-radius: 2px;
+      transition: all 0.3s;
     }
 
     /* ─── ABOUT ─── */
@@ -297,34 +318,23 @@
       background: var(--white);
     }
 
-    .about-visual {
-      position: relative;
-    }
+    .about-visual { position: relative; }
 
     .about-img-frame {
-      width: 100%;
-      aspect-ratio: 4/5;
+      width: 100%; aspect-ratio: 4/5;
       background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 100%);
-      border-radius: 2px;
-      overflow: hidden;
-      position: relative;
+      border-radius: 2px; overflow: hidden; position: relative;
     }
-
-    /* SVG illustration placeholder */
     .about-img-frame svg { width: 100%; height: 100%; }
 
     .about-badge {
-      position: absolute;
-      bottom: -1.5rem; right: -1.5rem;
-      background: var(--blue-accent);
-      color: var(--white);
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      text-align: center;
-      width: 140px;
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--gold); color: #0a1f44;
+      padding: 1.5rem; border-radius: var(--radius);
+      text-align: center; width: 140px;
     }
     .about-badge .big { font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 800; display: block; }
-    .about-badge .small { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.05em; text-transform: uppercase; }
+    .about-badge .small { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
 
     .about-values { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
     .value-row {
@@ -334,84 +344,60 @@
       border-radius: var(--radius);
       transition: border-color 0.2s, background 0.2s;
     }
-    .value-row:hover { border-color: var(--blue-accent); background: var(--blue-pale); }
+    .value-row:hover { border-color: var(--gold); background: #fdf9f0; }
     .value-icon { font-size: 1.3rem; flex-shrink: 0; }
     .value-text strong { display: block; font-size: 0.9rem; color: var(--blue-deep); }
     .value-text span { font-size: 0.82rem; color: var(--gray-text); }
 
     /* ─── CLIENTS LOGO BAR ─── */
-    #clients {
-      background: var(--blue-deep);
-      padding: 60px 5vw;
-    }
+    #clients { background: var(--blue-deep); padding: 60px 5vw; }
     .clients-label {
       text-align: center;
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      text-transform: uppercase; color: rgba(201,168,76,0.4);
       margin-bottom: 2.5rem;
     }
     .clients-track-wrap { overflow: hidden; position: relative; }
-    .clients-track-wrap::before,
-    .clients-track-wrap::after {
+    .clients-track-wrap::before, .clients-track-wrap::after {
       content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
     }
     .clients-track-wrap::before { left: 0; background: linear-gradient(to right, var(--blue-deep), transparent); }
     .clients-track-wrap::after { right: 0; background: linear-gradient(to left, var(--blue-deep), transparent); }
-
     .clients-track {
       display: flex; gap: 4rem; align-items: center;
-      width: max-content;
-      animation: scrollTrack 30s linear infinite;
+      width: max-content; animation: scrollTrack 30s linear infinite;
     }
-    @keyframes scrollTrack {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
+    @keyframes scrollTrack { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .client-logo {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.1rem; font-weight: 700; letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase; white-space: nowrap;
+      color: rgba(255,255,255,0.25); text-transform: uppercase; white-space: nowrap;
       transition: color 0.2s;
     }
-    .client-logo:hover { color: rgba(255,255,255,0.7); }
+    .client-logo:hover { color: var(--gold); }
 
     /* ─── PROCESS ─── */
     #process { background: var(--gray-soft); }
     .process-header { margin-bottom: 4rem; }
-
     .process-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0;
-      position: relative;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0; position: relative;
     }
     .process-steps::before {
-      content: '';
-      position: absolute; top: 36px; left: 10%; right: 10%;
-      height: 1px; background: rgba(10,31,68,0.1);
-      z-index: 0;
+      content: ''; position: absolute; top: 36px; left: 10%; right: 10%;
+      height: 1px; background: rgba(10,31,68,0.1); z-index: 0;
     }
-
-    .step {
-      position: relative; z-index: 1;
-      padding: 0 1.5rem 2rem;
-      text-align: center;
-    }
+    .step { position: relative; z-index: 1; padding: 0 1.5rem 2rem; text-align: center; }
     .step-num {
       width: 72px; height: 72px; margin: 0 auto 1.5rem;
-      border-radius: 50%;
-      background: var(--white);
+      border-radius: 50%; background: var(--white);
       border: 2px solid rgba(10,31,68,0.1);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.6rem; font-weight: 800;
-      color: var(--blue-accent);
+      font-size: 1.6rem; font-weight: 800; color: var(--gold);
       transition: background 0.25s, border-color 0.25s, color 0.25s;
     }
-    .step:hover .step-num {
-      background: var(--blue-accent); border-color: var(--blue-accent); color: var(--white);
-    }
+    .step:hover .step-num { background: var(--gold); border-color: var(--gold); color: #0a1f44; }
     .step h4 {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.05rem; font-weight: 700; text-transform: uppercase;
@@ -421,90 +407,82 @@
 
     /* ─── CONTACT ─── */
     #contact {
-      background: var(--blue-deep);
-      color: var(--white);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6vw;
-      align-items: start;
+      background: var(--blue-deep); color: var(--white);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start;
     }
-
     #contact h2 { color: var(--white); }
-    #contact .section-label { color: var(--blue-light); }
+    #contact .section-label { color: var(--gold); }
     #contact .section-desc { color: rgba(255,255,255,0.55); }
-
     .contact-info { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-    .contact-item {
-      display: flex; align-items: center; gap: 1rem;
-    }
+    .contact-item { display: flex; align-items: center; gap: 1rem; }
     .contact-item-icon {
       width: 44px; height: 44px; flex-shrink: 0;
-      background: rgba(29,111,196,0.2);
+      background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
       border-radius: var(--radius);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
     }
-    .contact-item-text strong { display: block; font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
-    .contact-item-text a, .contact-item-text span {
-      color: var(--white); text-decoration: none; font-size: 0.97rem;
-    }
-    .contact-item-text a:hover { color: var(--blue-light); }
-
+    .contact-item-text strong { display: block; font-size: 0.78rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+    .contact-item-text a, .contact-item-text span { color: var(--white); text-decoration: none; font-size: 0.97rem; }
+    .contact-item-text a:hover { color: var(--gold); }
     .contact-form { display: flex; flex-direction: column; gap: 1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 6px; }
-    label { font-size: 0.78rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+    label { font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; text-transform: uppercase; }
     input, textarea, select {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--white);
-      padding: 0.75rem 1rem;
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, background 0.2s;
-      width: 100%;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white); padding: 0.75rem 1rem; border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s; width: 100%;
     }
     input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--blue-accent);
-      background: rgba(29,111,196,0.1);
-    }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); }
     select option { background: var(--blue-deep); }
     textarea { resize: vertical; min-height: 130px; }
-
     .form-submit {
-      background: var(--blue-accent);
-      color: var(--white);
-      border: none; cursor: pointer;
-      padding: 0.9rem 2rem;
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem; font-weight: 500;
+      background: var(--gold); color: #0a1f44; border: none; cursor: pointer;
+      padding: 0.9rem 2rem; border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
       transition: background 0.2s, transform 0.2s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-top: 0.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.5rem;
     }
-    .form-submit:hover { background: var(--blue-light); transform: translateY(-2px); }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
 
     /* ─── FOOTER ─── */
     footer {
-      background: #060f21;
-      padding: 2.5rem 5vw;
+      background: #060f21; padding: 2.5rem 5vw;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 1rem;
+      border-top: 1px solid rgba(201,168,76,0.12);
     }
-    .footer-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.3rem; font-weight: 800; letter-spacing: 0.08em;
-      color: var(--white);
+
+    /* ══ NOUVEAU LOGO FOOTER ══ */
+    .footer-logo-wrap {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
     }
-    .footer-logo span { color: var(--blue-accent); }
-    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+    .footer-logo-texts { display: flex; flex-direction: column; line-height: 1; }
+    .footer-logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 800; letter-spacing: 4px;
+      color: #F5F0E8; text-transform: uppercase;
+    }
+    .footer-logo-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 6.5px; font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(201,168,76,0.55); margin-top: 3px;
+    }
+    .footer-logo-city {
+      font-size: 6px; font-weight: 400; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(201,168,76,0.3); margin-top: 2px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.25); }
     .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.35); text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; }
-    .footer-links a:hover { color: var(--blue-light); }
+    .footer-links a {
+      font-size: 0.78rem; color: rgba(255,255,255,0.3); text-decoration: none;
+      text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
@@ -522,7 +500,25 @@
 
 <!-- ─── NAV ─── -->
 <nav id="navbar">
-  <a href="#" class="nav-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 36" width="190" height="36"><defs><linearGradient id="tubeNav" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a1f44"/><stop offset="100%" stop-color="#1d6fc4"/></linearGradient><linearGradient id="bubNav" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d6fc4"/><stop offset="100%" stop-color="#4a9fe8"/></linearGradient></defs><rect x="1" y="6" width="34" height="24" rx="12" fill="none" stroke="url(#tubeNav)" stroke-width="2"/><line x1="11" y1="9" x2="11" y2="27" stroke="#1d6fc4" stroke-width="0.8" opacity="0.35"/><line x1="18" y1="8" x2="18" y2="28" stroke="#1d6fc4" stroke-width="1.2" opacity="0.55"/><line x1="25" y1="9" x2="25" y2="27" stroke="#1d6fc4" stroke-width="0.8" opacity="0.35"/><circle cx="18" cy="18" r="7" fill="#1d6fc4" opacity="0.08"/><circle cx="18" cy="18" r="7" fill="none" stroke="url(#bubNav)" stroke-width="1.6"/><circle cx="18" cy="18" r="2.8" fill="url(#bubNav)"/><circle cx="18" cy="18" r="1.2" fill="white"/><line x1="48" y1="8" x2="48" y2="28" stroke="#0a1f44" stroke-width="0.8" opacity="0.12"/><text x="54" y="23" font-family="Barlow Condensed,Arial Black,sans-serif" font-size="20" font-weight="900" letter-spacing="2"><tspan fill="#0a1f44">GEO</tspan><tspan fill="#1d6fc4">MI</tspan><tspan fill="#0a1f44">BRA</tspan></text></svg></a>
+  <a href="#" class="nav-logo">
+    <!-- Icône hexagone SVG -->
+    <svg width="38" height="38" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" stroke="#C9A84C" stroke-width="0.8" opacity="0.22"/>
+      <circle cx="50" cy="50" r="38" stroke="#C9A84C" stroke-width="0.6" opacity="0.3" stroke-dasharray="3 5"/>
+      <circle cx="50" cy="50" r="30" stroke="#C9A84C" stroke-width="0.9" opacity="0.42"/>
+      <path d="M50 18 L78 34 L78 66 L50 82 L22 66 L22 34 Z" stroke="#C9A84C" stroke-width="1.8" fill="rgba(201,168,76,0.05)"/>
+      <path d="M50 30 L66 39 L66 57 L50 66 L34 57 L34 39 Z" stroke="#C9A84C" stroke-width="0.9" fill="none" opacity="0.55"/>
+      <line x1="50" y1="30" x2="50" y2="70" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"/>
+      <line x1="30" y1="50" x2="70" y2="50" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"/>
+      <circle cx="50" cy="50" r="5.5" fill="#C9A84C"/>
+      <circle cx="50" cy="50" r="2.5" fill="#08122a"/>
+    </svg>
+    <div class="nav-logo-texts">
+      <span class="nav-logo-name">GEOMIBRA</span>
+      <span class="nav-logo-sub">Bureau d'Études Technique</span>
+      <span class="nav-logo-city">Abidjan · Côte d'Ivoire</span>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#about">À propos</a></li>
@@ -537,13 +533,13 @@
   <div class="hero-bg-grid"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">Bureau d'études & mesures de précision</div>
+    <div class="hero-badge">Bureau d'Études Technique · Topographie · SIG · BIM</div>
     <h1>
       Expertise terrain,<br>
       <em>données fiables.</em>
     </h1>
     <p class="hero-sub">
-      GEOMIBRA accompagne les professionnels du BTP, collectivités et maîtres d'ouvrage en topographie, détection de réseaux, SIG et ingénierie des infrastructures.
+      GEOMIBRA accompagne les architectes, bureaux d'études et promoteurs immobiliers en topographie de précision, scan 3D, SIG et ingénierie à Abidjan.
     </p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">
@@ -554,16 +550,16 @@
     </div>
     <div class="hero-stats">
       <div>
-        <div class="stat-val">15<span>+</span></div>
-        <div class="stat-label">Ans d'expertise</div>
-      </div>
-      <div>
-        <div class="stat-val">500<span>+</span></div>
-        <div class="stat-label">Chantiers réalisés</div>
-      </div>
-      <div>
-        <div class="stat-val">3<span>mm</span></div>
+        <div class="stat-val">5<span>cm</span></div>
         <div class="stat-label">Précision garantie</div>
+      </div>
+      <div>
+        <div class="stat-val">360<span>°</span></div>
+        <div class="stat-label">Scan 3D</div>
+      </div>
+      <div>
+        <div class="stat-val">24<span>h</span></div>
+        <div class="stat-label">Réponse devis</div>
       </div>
     </div>
   </div>
@@ -588,18 +584,18 @@
       <div class="service-tags">
         <span class="tag">Levé 3D</span>
         <span class="tag">Scanner laser</span>
-        <span class="tag">Drone</span>
+        <span class="tag">GNSS RTK</span>
       </div>
     </div>
     <div class="service-card">
       <span class="service-num">02</span>
-      <div class="service-icon">🔍</div>
-      <h3>Détection de réseaux</h3>
-      <p>Localisation et cartographie des réseaux souterrains (électricité, gaz, eau, télécoms) avant travaux. Géoradar et détection électromagnétique.</p>
+      <div class="service-icon">🏗️</div>
+      <h3>Relevé de Bâtiment</h3>
+      <p>Relevés architecturaux complets — plans de niveaux, façades, coupes, état des lieux avant rénovation avec scan 3D intérieur.</p>
       <div class="service-tags">
-        <span class="tag">Géoradar GPR</span>
-        <span class="tag">DT-DICT</span>
-        <span class="tag">Marquage terrain</span>
+        <span class="tag">Scan intérieur</span>
+        <span class="tag">Façades</span>
+        <span class="tag">Plans 2D/3D</span>
       </div>
     </div>
     <div class="service-card">
@@ -616,34 +612,34 @@
     <div class="service-card">
       <span class="service-num">04</span>
       <div class="service-icon">⚙️</div>
-      <h3>Ingénierie & Études</h3>
-      <p>Études techniques, contrôles de conformité, cubatures, modélisation 3D des infrastructures et accompagnement en maîtrise d'œuvre.</p>
+      <h3>BIM & Modélisation 3D</h3>
+      <p>Modèles BIM LOD 200/300, jumeaux numériques et exports compatibles Revit, AutoCAD, ArchiCAD pour vos projets.</p>
       <div class="service-tags">
-        <span class="tag">BIM / MNT</span>
-        <span class="tag">Cubature</span>
-        <span class="tag">Contrôle qualité</span>
+        <span class="tag">BIM LOD 300</span>
+        <span class="tag">Revit</span>
+        <span class="tag">Jumeau numérique</span>
       </div>
     </div>
     <div class="service-card">
       <span class="service-num">05</span>
-      <div class="service-icon">🛸</div>
-      <h3>Topographie par drone</h3>
-      <p>Photogrammétrie aérienne, modèles numériques de terrain, orthophotographies haute résolution pour grandes surfaces et zones d'accès difficile.</p>
+      <div class="service-icon">🔵</div>
+      <h3>Scan 3D & Nuage de Points</h3>
+      <p>Capture 3D haute définition en intérieur et extérieur grâce au scanner SLAM LiDAR CHCNav RS10. Nuages de points colorisés haute densité.</p>
       <div class="service-tags">
-        <span class="tag">Photogrammétrie</span>
-        <span class="tag">Orthophoto</span>
-        <span class="tag">MNT / MNS</span>
+        <span class="tag">SLAM LiDAR</span>
+        <span class="tag">Export LAS/E57</span>
+        <span class="tag">640K pts/sec</span>
       </div>
     </div>
     <div class="service-card">
       <span class="service-num">06</span>
       <div class="service-icon">📋</div>
-      <h3>Assistance & Conseil</h3>
-      <p>Expertise technique, formation aux outils géomatiques, assistance à maîtrise d'ouvrage et conseil réglementaire (DT, Classe A/B/C).</p>
+      <h3>Ingénierie & Études</h3>
+      <p>Études techniques, contrôles de conformité, cubatures, modélisation MNT et accompagnement en maîtrise d'œuvre.</p>
       <div class="service-tags">
+        <span class="tag">MNT/MNS</span>
+        <span class="tag">Cubature</span>
         <span class="tag">AMO</span>
-        <span class="tag">Formation</span>
-        <span class="tag">Réglementation</span>
       </div>
     </div>
   </div>
@@ -651,38 +647,37 @@
 
 <!-- ─── CLIENTS ─── -->
 <section id="clients">
-  <p class="clients-label">Ils nous font confiance</p>
+  <p class="clients-label">Nos secteurs d'intervention</p>
   <div class="clients-track-wrap">
     <div class="clients-track">
-      <span class="client-logo">Entreprise BTP</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Collectivités locales</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Promoteur A</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Gestionnaire réseaux</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Syndic & Aménagement</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Bureau d'études partenaire</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Mairies & Agglomérations</span>
-      <span class="client-logo">•</span>
-      <!-- duplicate for infinite loop -->
-      <span class="client-logo">Entreprise BTP</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Collectivités locales</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Promoteur A</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Gestionnaire réseaux</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Syndic & Aménagement</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Bureau d'études partenaire</span>
-      <span class="client-logo">•</span>
-      <span class="client-logo">Mairies & Agglomérations</span>
-      <span class="client-logo">•</span>
+      <span class="client-logo">Architectes</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Bureaux d'études</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Promoteurs immobiliers</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Collectivités</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">BTP & Construction</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Ingénierie civile</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Mines & Industries</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Architectes</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Bureaux d'études</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Promoteurs immobiliers</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Collectivités</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">BTP & Construction</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Ingénierie civile</span>
+      <span class="client-logo">◆</span>
+      <span class="client-logo">Mines & Industries</span>
+      <span class="client-logo">◆</span>
     </div>
   </div>
 </section>
@@ -691,7 +686,6 @@
 <section id="about">
   <div class="about-visual">
     <div class="about-img-frame">
-      <!-- Illustration SVG terrain / topo -->
       <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -700,54 +694,39 @@
           </linearGradient>
         </defs>
         <rect width="400" height="500" fill="url(#bg)"/>
-        <!-- Grid lines -->
-        <g stroke="rgba(29,111,196,0.2)" stroke-width="1">
-          <line x1="0" y1="100" x2="400" y2="100"/>
-          <line x1="0" y1="200" x2="400" y2="200"/>
-          <line x1="0" y1="300" x2="400" y2="300"/>
-          <line x1="0" y1="400" x2="400" y2="400"/>
-          <line x1="100" y1="0" x2="100" y2="500"/>
-          <line x1="200" y1="0" x2="200" y2="500"/>
+        <g stroke="rgba(201,168,76,0.12)" stroke-width="1">
+          <line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="200" x2="400" y2="200"/>
+          <line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="400" x2="400" y2="400"/>
+          <line x1="100" y1="0" x2="100" y2="500"/><line x1="200" y1="0" x2="200" y2="500"/>
           <line x1="300" y1="0" x2="300" y2="500"/>
         </g>
-        <!-- Terrain contour lines -->
-        <g fill="none" stroke="rgba(74,159,232,0.5)" stroke-width="1.5">
+        <g fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="1.5">
           <path d="M 20 380 Q 80 360 140 370 Q 200 380 260 350 Q 320 320 380 340"/>
           <path d="M 20 340 Q 80 310 150 325 Q 220 340 280 300 Q 340 260 380 290"/>
           <path d="M 20 300 Q 100 260 170 280 Q 250 300 300 250 Q 350 200 380 240"/>
           <path d="M 20 260 Q 110 210 180 235 Q 260 260 320 200 Q 360 160 380 190"/>
           <path d="M 40 220 Q 120 170 200 195 Q 280 220 340 155 Q 370 125 380 145"/>
         </g>
-        <!-- Survey instrument icon -->
         <g transform="translate(160, 150)">
-          <circle cx="40" cy="40" r="30" fill="none" stroke="rgba(29,111,196,0.8)" stroke-width="2"/>
-          <line x1="40" y1="10" x2="40" y2="70" stroke="rgba(29,111,196,0.8)" stroke-width="1.5"/>
-          <line x1="10" y1="40" x2="70" y2="40" stroke="rgba(29,111,196,0.8)" stroke-width="1.5"/>
-          <circle cx="40" cy="40" r="5" fill="rgba(74,159,232,0.9)"/>
-          <!-- tripod -->
-          <line x1="40" y1="70" x2="0" y2="110" stroke="rgba(29,111,196,0.7)" stroke-width="2"/>
-          <line x1="40" y1="70" x2="40" y2="120" stroke="rgba(29,111,196,0.7)" stroke-width="2"/>
-          <line x1="40" y1="70" x2="80" y2="110" stroke="rgba(29,111,196,0.7)" stroke-width="2"/>
+          <circle cx="40" cy="40" r="30" fill="none" stroke="rgba(201,168,76,0.7)" stroke-width="2"/>
+          <line x1="40" y1="10" x2="40" y2="70" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <line x1="10" y1="40" x2="70" y2="40" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="5" fill="#C9A84C"/>
+          <line x1="40" y1="70" x2="0" y2="110" stroke="rgba(201,168,76,0.5)" stroke-width="2"/>
+          <line x1="40" y1="70" x2="40" y2="120" stroke="rgba(201,168,76,0.5)" stroke-width="2"/>
+          <line x1="40" y1="70" x2="80" y2="110" stroke="rgba(201,168,76,0.5)" stroke-width="2"/>
         </g>
-        <!-- GPS marker -->
-        <g transform="translate(60, 200)">
-          <circle cx="20" cy="20" r="12" fill="rgba(29,111,196,0.3)" stroke="rgba(74,159,232,0.8)" stroke-width="1.5"/>
-          <circle cx="20" cy="20" r="4" fill="rgba(74,159,232,1)"/>
-          <line x1="20" y1="32" x2="20" y2="55" stroke="rgba(74,159,232,0.8)" stroke-width="2"/>
-        </g>
-        <!-- Data label floating -->
-        <rect x="240" y="60" width="130" height="50" rx="3" fill="rgba(29,111,196,0.15)" stroke="rgba(29,111,196,0.4)" stroke-width="1"/>
-        <text x="255" y="82" font-family="monospace" font-size="10" fill="rgba(74,159,232,0.9)">X: 47.3421°N</text>
-        <text x="255" y="98" font-family="monospace" font-size="10" fill="rgba(74,159,232,0.9)">Y: 2.8634°E</text>
-        <!-- accuracy ring -->
-        <circle cx="200" cy="400" r="40" fill="none" stroke="rgba(29,111,196,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
-        <circle cx="200" cy="400" r="20" fill="none" stroke="rgba(29,111,196,0.5)" stroke-width="1.5"/>
-        <circle cx="200" cy="400" r="6" fill="rgba(74,159,232,0.8)"/>
+        <rect x="240" y="60" width="130" height="50" rx="3" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+        <text x="255" y="82" font-family="monospace" font-size="10" fill="rgba(201,168,76,0.8)">X: 5.3484°N</text>
+        <text x="255" y="98" font-family="monospace" font-size="10" fill="rgba(201,168,76,0.8)">Y: -4.0167°W</text>
+        <circle cx="200" cy="400" r="40" fill="none" stroke="rgba(201,168,76,0.25)" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle cx="200" cy="400" r="20" fill="none" stroke="rgba(201,168,76,0.45)" stroke-width="1.5"/>
+        <circle cx="200" cy="400" r="6" fill="#C9A84C" opacity="0.8"/>
       </svg>
     </div>
     <div class="about-badge">
-      <span class="big">15</span>
-      <span class="small">ans<br>d'expérience</span>
+      <span class="big">BET</span>
+      <span class="small">Bureau<br>d'Études</span>
     </div>
   </div>
 
@@ -755,12 +734,11 @@
     <div class="section-label">À propos de GEOMIBRA</div>
     <h2>Un bureau d'études<br><em>à votre service</em></h2>
     <p class="section-desc">
-      GEOMIBRA est un bureau d'études spécialisé en topographie, détection des réseaux souterrains, SIG et ingénierie des infrastructures. Nous accompagnons les professionnels du BTP, collectivités et maîtres d'ouvrage dans la sécurisation et l'optimisation de leurs projets.
+      GEOMIBRA est un bureau d'études technique spécialisé en topographie, scan 3D, SIG et ingénierie à Abidjan. Nous accompagnons les architectes, bureaux d'études et promoteurs immobiliers dans la sécurisation et l'optimisation de leurs projets.
     </p>
     <p class="section-desc" style="margin-top: 1rem;">
-      Grâce à notre expertise technique et nos outils de haute précision (scanner 3D, géoradar, drone, SIG), nous garantissons des solutions fiables et conformes aux réglementations en vigueur.
+      Grâce à notre équipement de haute précision — le CHCNav RS10, scanner SLAM 3D de dernière génération — nous livrons des données fiables et des rendus 3D d'exception.
     </p>
-
     <div class="about-values">
       <div class="value-row">
         <span class="value-icon">🎯</span>
@@ -773,21 +751,21 @@
         <span class="value-icon">⚡</span>
         <div class="value-text">
           <strong>Réactivité</strong>
-          <span>Intervention rapide, délais tenus, équipe disponible.</span>
+          <span>Réponse sous 24h, délais tenus, équipe disponible.</span>
         </div>
       </div>
       <div class="value-row">
-        <span class="value-icon">🔒</span>
+        <span class="value-icon">🔵</span>
         <div class="value-text">
-          <strong>Sécurité & Conformité</strong>
-          <span>Normes et réglementations respectées à chaque prestation.</span>
+          <strong>Technologie de pointe</strong>
+          <span>Scanner 3D SLAM, GNSS RTK, BIM — les meilleurs outils du marché.</span>
         </div>
       </div>
       <div class="value-row">
         <span class="value-icon">💡</span>
         <div class="value-text">
-          <strong>Innovation technologique</strong>
-          <span>Outils modernes : drone, scanner 3D, géoradar, SIG.</span>
+          <strong>Livrables d'exception</strong>
+          <span>Nuages de points colorisés, modèles BIM, jumeaux numériques.</span>
         </div>
       </div>
     </div>
@@ -801,7 +779,6 @@
     <h2>Comment nous <em>travaillons</em></h2>
     <p class="section-desc">Un processus structuré, de la prise en charge de votre demande jusqu'à la livraison des livrables finaux.</p>
   </div>
-
   <div class="process-steps">
     <div class="step">
       <div class="step-num">01</div>
@@ -816,7 +793,7 @@
     <div class="step">
       <div class="step-num">03</div>
       <h4>Intervention terrain</h4>
-      <p>Déploiement de nos équipes et équipements sur site pour des mesures et relevés haute précision.</p>
+      <p>Déploiement sur site avec le CHCNav RS10 pour des mesures et relevés haute précision.</p>
     </div>
     <div class="step">
       <div class="step-num">04</div>
@@ -826,7 +803,7 @@
     <div class="step">
       <div class="step-num">05</div>
       <h4>Livraison des livrables</h4>
-      <p>Remise des plans, rapports, fichiers SIG ou nuages de points dans les formats standards du secteur.</p>
+      <p>Remise des plans, nuages de points, fichiers SIG ou modèles BIM dans les formats standards.</p>
     </div>
   </div>
 </section>
@@ -837,20 +814,19 @@
     <div class="section-label">Travaillons ensemble</div>
     <h2>Contactez<br><em>GEOMIBRA</em></h2>
     <p class="section-desc">Un projet, une question, un devis ? Notre équipe vous répond rapidement et vous propose la meilleure solution pour votre chantier.</p>
-
     <div class="contact-info">
       <div class="contact-item">
         <div class="contact-item-icon">📍</div>
         <div class="contact-item-text">
           <strong>Adresse</strong>
-          <span>Paris · Abidjan</span>
+          <span>Cocody, Abidjan · Côte d'Ivoire</span>
         </div>
       </div>
       <div class="contact-item">
         <div class="contact-item-icon">📞</div>
         <div class="contact-item-text">
           <strong>Téléphone</strong>
-          <a href="tel:+33620578943">+33 6 20 57 89 43</a> · <a href="tel:+2250779020540">+225 07 79 02 05 40</a>
+          <a href="tel:+2250779020540">+225 07 79 02 05 40</a>
         </div>
       </div>
       <div class="contact-item">
@@ -864,12 +840,11 @@
         <div class="contact-item-icon">🕐</div>
         <div class="contact-item-text">
           <strong>Disponibilité</strong>
-          <span>Lun – Ven : 8h00 – 18h00</span>
+          <span>Lun – Sam : 8h00 – 18h00</span>
         </div>
       </div>
     </div>
   </div>
-
   <div class="contact-form-wrap">
     <form class="contact-form" onsubmit="handleSubmit(event)">
       <div class="form-row">
@@ -885,23 +860,23 @@
       <div class="form-row">
         <div class="form-group">
           <label for="email">Email *</label>
-          <input type="email" id="email" placeholder="email@exemple.fr" required />
+          <input type="email" id="email" placeholder="email@exemple.com" required />
         </div>
         <div class="form-group">
           <label for="tel">Téléphone</label>
-          <input type="tel" id="tel" placeholder="06 00 00 00 00" />
+          <input type="tel" id="tel" placeholder="+225 00 00 00 00" />
         </div>
       </div>
       <div class="form-group">
         <label for="service">Service souhaité</label>
         <select id="service">
           <option value="">Sélectionner un service...</option>
-          <option>Topographie</option>
-          <option>Détection de réseaux</option>
+          <option>Topographie terrain</option>
+          <option>Relevé de bâtiment</option>
+          <option>Scan 3D & Nuage de points</option>
+          <option>BIM & Modélisation 3D</option>
           <option>SIG & Cartographie</option>
           <option>Ingénierie & Études</option>
-          <option>Topographie par drone</option>
-          <option>Assistance & Conseil</option>
         </select>
       </div>
       <div class="form-group">
@@ -918,7 +893,24 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 36" width="160" height="30"><defs><linearGradient id="tubeFoot" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4a9fe8"/><stop offset="100%" stop-color="#1d6fc4"/></linearGradient><linearGradient id="bubFoot" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a9fe8"/><stop offset="100%" stop-color="#1d6fc4"/></linearGradient></defs><rect x="1" y="6" width="34" height="24" rx="12" fill="none" stroke="url(#tubeFoot)" stroke-width="2"/><line x1="11" y1="9" x2="11" y2="27" stroke="#4a9fe8" stroke-width="0.8" opacity="0.3"/><line x1="18" y1="8" x2="18" y2="28" stroke="#4a9fe8" stroke-width="1.2" opacity="0.5"/><line x1="25" y1="9" x2="25" y2="27" stroke="#4a9fe8" stroke-width="0.8" opacity="0.3"/><circle cx="18" cy="18" r="7" fill="#4a9fe8" opacity="0.06"/><circle cx="18" cy="18" r="7" fill="none" stroke="url(#bubFoot)" stroke-width="1.6"/><circle cx="18" cy="18" r="2.8" fill="url(#bubFoot)"/><circle cx="18" cy="18" r="1.2" fill="white"/><line x1="48" y1="8" x2="48" y2="28" stroke="white" stroke-width="0.8" opacity="0.08"/><text x="54" y="23" font-family="Barlow Condensed,Arial Black,sans-serif" font-size="20" font-weight="900" letter-spacing="2"><tspan fill="white">GEO</tspan><tspan fill="#4a9fe8">MI</tspan><tspan fill="white">BRA</tspan></text></svg></div>
+  <a href="#" class="footer-logo-wrap">
+    <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke="#C9A84C" stroke-width="0.8" opacity="0.22"/>
+      <circle cx="50" cy="50" r="38" stroke="#C9A84C" stroke-width="0.6" opacity="0.3" stroke-dasharray="3 5"/>
+      <circle cx="50" cy="50" r="30" stroke="#C9A84C" stroke-width="0.9" opacity="0.42"/>
+      <path d="M50 18 L78 34 L78 66 L50 82 L22 66 L22 34 Z" stroke="#C9A84C" stroke-width="1.8" fill="rgba(201,168,76,0.05)"/>
+      <path d="M50 30 L66 39 L66 57 L50 66 L34 57 L34 39 Z" stroke="#C9A84C" stroke-width="0.9" fill="none" opacity="0.55"/>
+      <line x1="50" y1="30" x2="50" y2="70" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"/>
+      <line x1="30" y1="50" x2="70" y2="50" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"/>
+      <circle cx="50" cy="50" r="5.5" fill="#C9A84C"/>
+      <circle cx="50" cy="50" r="2.5" fill="#060f21"/>
+    </svg>
+    <div class="footer-logo-texts">
+      <span class="footer-logo-name">GEOMIBRA</span>
+      <span class="footer-logo-sub">Bureau d'Études Technique</span>
+      <span class="footer-logo-city">Abidjan · Côte d'Ivoire</span>
+    </div>
+  </a>
   <p>© 2025 GEOMIBRA – Tous droits réservés</p>
   <div class="footer-links">
     <a href="#services">Services</a>
@@ -927,14 +919,12 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Nav scroll effect
+<script>
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Smooth appear on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -951,11 +941,13 @@
     observer.observe(el);
   });
 
-  // Form submit
   function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('.form-submit');
-    btn.textContent = '✓ Message envoyé !';
+    btn.textContent = '✓ Message envoyé — nous vous contactons sous 24h';
     btn.style.background = '#16a34a';
-    setTimeout(() => {
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="
+    btn.style.color = 'white';
+  }
+</script>
+</body>
+</html>
